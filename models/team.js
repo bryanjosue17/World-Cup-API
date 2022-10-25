@@ -7,6 +7,17 @@ const TeamSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+
+    copasGanadas: {
+        type: Number,
+        required: true,
+    },
+
+    ranking: {
+        type: Number,
+        required: true,
+    },
+
     continent: {
         type: String,
         required: true

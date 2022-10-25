@@ -3,6 +3,7 @@ const express = require('express');
 const Group = require('../models/group');
 const Team = require('../models/team');
 const Game = require('../models/game');
+const Stadium = require('../models/stadium');
 
 
 // Group Get Routes
@@ -44,6 +45,8 @@ exports.getGroupByParameter = async(req,res) => {
     };
 };
 exports.getGroupByQuery = async(req,res) => {
+    console.log("req: ", req.query);
+
     try{
         if(req.query.name == undefined){
             return res.status(400).send({
@@ -71,6 +74,8 @@ exports.getGroupByQuery = async(req,res) => {
                     gamesPlayed: team.gamesPlayed,
                     createdAt: team.createdAt
                 }
+            }).sort((a,b) => {
+                return b.points - a.points
             }),
             request: {
                 type: 'GET',
@@ -95,6 +100,36 @@ exports.getGroups = async(req,res) => {
                     id: group._id,
                     name: group.name,
                     createdAt: group.createdAt
+                }
+            }),
+            request: {
+                type: 'GET',
+                url: req.baseUrl + req.url
+            }
+        }
+        return res.send(reponse);
+    }catch(err){
+        return res.status(400).send({
+            error: 'Error getting all groups'
+        });
+    };
+};
+
+//get stadium
+
+exports.getStadium = async(req,res) => {
+    try{
+        const stadium = await Stadium.find();
+
+        const reponse = {
+            stadium: stadium.map(stadium => {
+                return {
+                    id: stadium._id,
+                    name: stadium.name,
+                    capacity: stadium.capacity,
+                    location: stadium.location,
+                    totalPlays: stadium.totalPlays,
+                    createdAt: stadium.createdAt
                 }
             }),
             request: {

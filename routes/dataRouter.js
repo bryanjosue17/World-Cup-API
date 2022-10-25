@@ -13,5 +13,10 @@ router.delete('/team/:idTeam', dataController.deleteTeam)
 router.post('/game', dataController.createGame)
 router.put('/game/:idGame', dataController.editGame)
 router.delete('/game/:idGame', dataController.deleteGame)
+// Route Stadium
+router.post('/stadium', dataController.createStadium)
+
+
+
 
 module.exports = app => app.use('/data', router)

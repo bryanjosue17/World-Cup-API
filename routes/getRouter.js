@@ -10,5 +10,7 @@ router.get('/team', GetControllers.getTeamByQuery)
 router.get('/teams', GetControllers.getTeams)
 router.get('/game/:idGame', GetControllers.getGameByParameter)
 router.get('/games', GetControllers.getGames)
+router.get('/stadiums', GetControllers.getStadium)
+
 
 module.exports = app => app.use('/get', router)

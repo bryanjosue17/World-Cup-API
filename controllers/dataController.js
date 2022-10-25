@@ -1,6 +1,7 @@
 const Group = require('../models/group');
 const Team = require('../models/team');
 const Game = require('../models/game');
+const Stadium = require('../models/stadium');
 
 
 // Group Data
@@ -14,6 +15,20 @@ exports.createGroup = async(req,res) => {
         });
     };
 };
+
+// Stadium Data
+exports.createStadium = async(req,res) => {
+    try{
+        const stadium = await Stadium.create(req.body);
+        return res.send({ stadium });
+    }catch(err){
+        return res.status(400).send({
+            error: 'Error creating group'
+        });
+    };
+};
+
+
 exports.editGroup = async(req,res) => {
     try{
 
