@@ -32,7 +32,7 @@ const StadiumSchema = new mongoose.Schema({
   },
 });
 
-const Stadium = mongoose.model("estadio", StadiumSchema);
+const Stadium = mongoose.model("Estadios", StadiumSchema);
 
 StadiumSchema.pre("save", (next) => {
   this.updatedAt = Date.now();

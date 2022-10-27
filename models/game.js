@@ -26,7 +26,8 @@ const GameSchema = new mongoose.Schema({
     },
     stadium: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Stadium'
+        ref: 'Estadios',
+        required: true
     },
     date: {
         type: Date,

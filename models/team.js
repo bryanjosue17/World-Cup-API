@@ -10,12 +10,12 @@ const TeamSchema = new mongoose.Schema({
 
     copasGanadas: {
         type: Number,
-        required: true,
+       // required: true,
     },
 
     ranking: {
         type: Number,
-        required: true,
+        //required: true,
     },
 
     continent: {
