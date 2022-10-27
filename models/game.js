@@ -1,5 +1,4 @@
 const mongoose = require('../database');
-const bcrypt = require('bcrypt');
 
 const GameSchema = new mongoose.Schema({
     typeGame:{
@@ -8,25 +7,27 @@ const GameSchema = new mongoose.Schema({
     },
     homeTeam: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Team',
+        ref: 'Teams',
         required: true
     },
     visitingTeam: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Team',
+        ref: 'Teams',
         required: true
     },
     homeGoals: {
         type: String,
-        default: 0
+        default: 0,
+        required: true
     },
     visitingGoals: {
         type: String,
-        default: 0
+        default: 0,
+        required: true
     },
     stadium: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Estadios',
+        ref: 'Stadiums',
         required: true
     },
     date: {
@@ -43,7 +44,7 @@ const GameSchema = new mongoose.Schema({
     }
 });
 
-const Game = mongoose.model('Game', GameSchema);
+const Game = mongoose.model('Games', GameSchema);
 
 GameSchema.pre('save', (next) => {
     this.updateAt = Date.now()

@@ -68,6 +68,7 @@ exports.getGameByParameter = async (req, res) => {
 exports.getGames = async (req, res) => {
   try {
     const games = await Game.find().populate(["homeTeam", "visitingTeam"]);
+    const stadium = await Stadium.findOne({ stadium: games.stadium });
 
     const ResponseTeam = (team) => {
       return {
@@ -79,11 +80,21 @@ exports.getGames = async (req, res) => {
         updatedAt: team.updatedAt,
       };
     };
+    const ResponseStadium = (stadium) => {
+      return {
+        id: stadium._id,
+        name: stadium.name,
+        capacity: stadium.capacity,
+        location: stadium.location,
+        totalPlays: stadium.totalPlays,
+      };
+    };
 
     const response = {
       games: games.map((game) => {
         const homeTeam = ResponseTeam(game.homeTeam);
         const visitingTeam = ResponseTeam(game.visitingTeam);
+        const stadiumResponse = ResponseStadium(stadium);
         return {
           id: game._id,
           typeGame: game.typeGame,
@@ -92,6 +103,7 @@ exports.getGames = async (req, res) => {
           visitingGoals: game.visitingGoals,
           homeTeam: homeTeam,
           visitingTeam: visitingTeam,
+          stadium: stadiumResponse,
           updatedAt: game.updatedAt,
         };
       }),
@@ -100,7 +112,6 @@ exports.getGames = async (req, res) => {
         url: req.baseUrl + req.url,
       },
     };
-
     return res.send(response);
   } catch (err) {
     return res.status(400).send({
@@ -124,13 +135,12 @@ exports.createGame = async (req, res) => {
       stadium: stadiumReq._id,
       date: date,
     });
-
-    await homeTeamReq.games.push(game);
+    homeTeamReq.games.push(game);
     await homeTeamReq.save();
-    await visitingTeamReq.games.push(game);
+    visitingTeamReq.games.push(game);
     await visitingTeamReq.save();
-
     return res.send({ game });
+    ;
   } catch (err) {
     console.log(err);
     return res.status(400).send({

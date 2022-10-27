@@ -8,6 +8,8 @@ const {
 } = require("../controllers/stadium.controller");
 
 const router = express.Router();
+const authMiddleware = require('../middleware/auth');
+router.use(authMiddleware);
 
 router.get("/stadiums", getStadium);
 router.post("/stadium", createStadium);

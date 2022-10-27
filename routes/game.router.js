@@ -7,6 +7,8 @@ const {
   deleteGame,
 } = require("../controllers/game.controller");
 const router = express.Router();
+const authMiddleware = require('../middleware/auth');
+router.use(authMiddleware);
 
 router.get("/game/:idGame", getGameByParameter);
 router.get("/games", getGames);

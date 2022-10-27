@@ -1,5 +1,4 @@
 const mongoose = require('../database');
-const bcrypt = require('bcrypt');
 
 const GroupSchema = new mongoose.Schema({
     name: {
@@ -18,7 +17,7 @@ const GroupSchema = new mongoose.Schema({
     }
 });
 
-const Group = mongoose.model('Group', GroupSchema);
+const Group = mongoose.model('Groups', GroupSchema);
 
 GroupSchema.pre('save', (next) => {
     this.updatedAt = Date.now()

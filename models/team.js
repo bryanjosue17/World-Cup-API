@@ -1,5 +1,4 @@
 const mongoose = require('../database');
-const bcrypt = require('bcrypt');
 
 const TeamSchema = new mongoose.Schema({
     name: {
@@ -7,17 +6,14 @@ const TeamSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-
-    copasGanadas: {
+    winnedCups: {
         type: Number,
-       // required: true,
+        required: true,
     },
-
     ranking: {
         type: Number,
-        //required: true,
+        required: true,
     },
-
     continent: {
         type: String,
         required: true
@@ -28,27 +24,27 @@ const TeamSchema = new mongoose.Schema({
     },
     points: {
         type: Number,
-        default: 0
+        default: 0,
     },
     goalsFor: {
         type: Number,
-        default: 0
+        default: 0,
     },
     goalsAgainst: {
         type: Number,
-        default: 0
+        default: 0,
     },
     games: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Game'
+        ref: 'Games',
     }],
     gamesPlayed: {
         type: Number,
-        default: 0
+        default: 0,
     },
     group: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Group'
+        ref: 'Groups',
     },
     updatedAt: {
         type: Date,
@@ -60,7 +56,7 @@ const TeamSchema = new mongoose.Schema({
     }
 });
 
-const Team = mongoose.model('Team', TeamSchema);
+const Team = mongoose.model('Teams', TeamSchema);
 
 TeamSchema.pre('save', (next) => {
     this.updatedAt = Date.now()

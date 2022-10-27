@@ -8,6 +8,8 @@ const {
   deleteGroup,
 } = require("../controllers/group.controller");
 const router = express.Router();
+const authMiddleware = require('../middleware/auth');
+router.use(authMiddleware);
 
 router.get("/group/:idGroup", getGroupByParameter);
 router.get("/group", getGroupByQuery);

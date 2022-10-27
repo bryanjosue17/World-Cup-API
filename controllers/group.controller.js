@@ -1,12 +1,11 @@
-
 const Group = require('../models/group');
 const Team = require('../models/team');
 
 // Group Get Routes
-exports.getGroupByParameter = async(req,res) => {
-    try{
+exports.getGroupByParameter = async (req, res) => {
+    try {
         const group = await Group.findById(req.params.idGroup);
-        const teams = await Team.find({group: group._id});
+        const teams = await Team.find({ group: group._id });
 
         const response = {
             group: {
@@ -34,22 +33,22 @@ exports.getGroupByParameter = async(req,res) => {
         }
 
         return res.send(response);
-    }catch(err){
+    } catch (err) {
         return res.status(400).send({
             error: `Error getting group with id:${req.params.idGroup}`
         });
     };
 };
-exports.getGroupByQuery = async(req,res) => {
+exports.getGroupByQuery = async (req, res) => {
 
-    try{
-        if(req.query.name == undefined){
+    try {
+        if (req.query.name == undefined) {
             return res.status(400).send({
                 error: 'Error no query declared'
             });
         };
-        const group = await Group.findOne({name: req.query.name});
-        const teams = await Team.find({group: group._id});
+        const group = await Group.findOne({ name: req.query.name });
+        const teams = await Team.find({ group: group._id });
 
         const response = {
             group: {
@@ -69,7 +68,7 @@ exports.getGroupByQuery = async(req,res) => {
                     gamesPlayed: team.gamesPlayed,
                     createdAt: team.createdAt
                 }
-            }).sort((a,b) => {
+            }).sort((a, b) => {
                 return b.points - a.points
             }),
             request: {
@@ -79,14 +78,14 @@ exports.getGroupByQuery = async(req,res) => {
         }
 
         return res.send(response);
-    }catch(err){
+    } catch (err) {
         return res.status(400).send({
             error: `Error getting group with name: ${req.query.name}`
         });
     };
 };
-exports.getGroups = async(req,res) => {
-    try{
+exports.getGroups = async (req, res) => {
+    try {
         const groups = await Group.find();
 
         const reponse = {
@@ -103,7 +102,7 @@ exports.getGroups = async(req,res) => {
             }
         }
         return res.send(reponse);
-    }catch(err){
+    } catch (err) {
         return res.status(400).send({
             error: 'Error getting all groups'
         });
@@ -111,11 +110,11 @@ exports.getGroups = async(req,res) => {
 };
 
 // Group Data
-exports.createGroup = async(req,res) => {
-    try{
+exports.createGroup = async (req, res) => {
+    try {
         const group = await Group.create(req.body);
         return res.send({ group });
-    }catch(err){
+    } catch (err) {
         return res.status(400).send({
             error: 'Error creating group'
         });
@@ -124,12 +123,11 @@ exports.createGroup = async(req,res) => {
 
 
 
-exports.editGroup = async(req,res) => {
-    try{
-
-        const group = await Group.findByIdAndUpdate(req.params.idGroup, req.body, {new: true});
-        return res.send({group});
-    }catch(err){
+exports.editGroup = async (req, res) => {
+    try {
+        const group = await Group.findByIdAndUpdate(req.params.idGroup, req.body, { new: true });
+        return res.send({ group });
+    } catch (err) {
         console.log(err)
         return res.status(400).send({
             error: 'Error editing group'
@@ -137,13 +135,11 @@ exports.editGroup = async(req,res) => {
     };
 };
 
-exports.deleteGroup = async(req,res) => {
-    try{
-
+exports.deleteGroup = async (req, res) => {
+    try {
         await Group.findByIdAndDelete(req.params.idGroup);
-
-        return res.send({ok: true})
-    }catch(err){
+        return res.send({ ok: true })
+    } catch (err) {
         return res.status(400).send({
             error: 'Error deleting group'
         })

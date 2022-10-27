@@ -1,5 +1,4 @@
 const mongoose = require("../database");
-const bcrypt = require("bcrypt");
 
 const StadiumSchema = new mongoose.Schema({
   name: {
@@ -32,7 +31,7 @@ const StadiumSchema = new mongoose.Schema({
   },
 });
 
-const Stadium = mongoose.model("Estadios", StadiumSchema);
+const Stadium = mongoose.model("Stadiums", StadiumSchema);
 
 StadiumSchema.pre("save", (next) => {
   this.updatedAt = Date.now();
